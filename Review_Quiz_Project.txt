@@ -1,0 +1,7 @@
+
+in the process of building the quiz app in python, i learnt how powerful nesting of conditionals, and indentation can be.
+i encountered some bugs not because the identation was wrong but because i didn't get the nesting of my conditionals right
+at first, questions would be printed at once along with their options
+another time, first question with just first option 
+Then i took it step by step to understand how the for loop is meant to work and finally, i fixed it perfectly.
+I really learnt how to use indentation along with nesting of loop
