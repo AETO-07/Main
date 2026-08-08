@@ -1,3 +1,4 @@
+import json
 class Student:
     def __init__(self, name, age, department, matric_no):
         self.name = name
@@ -12,11 +13,19 @@ class Student:
         )
     
     def display_info(self):
-        print("Inside display_info")
+        #print("Inside display_info")
         print(f'Name: {self.name}')
         print(f'Age: {self.age}')
         print(f'Department: {self.department}')
-        print(f'Matric Number: {self.matric_no}')
+        print(f'Matric Number: {self.matric_no}') \
+
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "age": self.age,
+            "department":  self.department,
+           "matric_no": self.matric_no 
+        }
 
 
 def menu():
@@ -34,7 +43,22 @@ def menu():
 
 students = []
 
-while True:
+try:
+    with open("Student_data.txt", "r") as file:
+        data = json.load(file)
+        for s in data:
+            new_students = Student(
+                s["name"],
+                s["age"],
+                s["department"],
+                s["matric_no"]
+            )
+    students.append(new_students)
+
+except FileNotFoundError:
+    pass
+
+while True: 
     
     saveChoice = menu()
     if saveChoice == 1:
@@ -83,6 +107,27 @@ while True:
                 break
         else:
             print("Student not found.")
+    elif saveChoice == 5:
+        getName = input("Enter student's name: ")
+        found = False
+        for s in students:
+            if getName.lower() == s.name.lower():
+                students.remove(s)
+                print("Student deleted succesfully")
+                found = True
+                break
+        else:
+                print("Student not found!")
+    elif saveChoice == 6:
+        new_students_dict = []
+        for s in students:
+            s = s.to_dict()
+            new_students_dict.append(s)
+
+        with open("Student_data.txt", "w") as file:
+            json.dump(new_students_dict, file, indent= 4)
+            print("Data saved successfully!")
+
     elif saveChoice == 7:
         print("Goodbye!")
         break
