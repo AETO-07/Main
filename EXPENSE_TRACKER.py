@@ -9,8 +9,8 @@ class Expense:
     def __str__(self):
         return f"Your Expense is: {self.category} | {self.amount} | {self.name} | {self.date}"
 
-expense = Expense("Cereals", 2500, "Chinese-rice", "2023-06-01")
-print(expense)
+# expense = Expense("Cereals", 2500, "Chinese-rice", "2023-06-01")
+# print(expense)
 
 expenses = []
 
@@ -30,14 +30,27 @@ def menu():
 
 saveChoice = menu()
 
-if saveChoice == 1:
-    category = input("Enter expense's category: ")
-    amount = float(input("Enter expense's amount: "))
-    name = input("Enter expese's name: ")
-    date = datetime.datetime.now().strftime("%d %b, %Y")
+while True:
 
-    data = Expense(category, amount, name, date)
-    expenses.append(data)
+    saveChoice = menu()
+
+    if saveChoice == 1:
+        category = input("Enter expense's category: ")
+        amount = float(input("Enter expense's amount: "))
+        name = input("Enter expense's name: ")
+        date = datetime.datetime.now().strftime("%d %b, %Y")
+
+        data = Expense(category, amount, name, date)
+        expenses.append(data)
+        print("Expense added successfully!")
+
+    elif saveChoice == 2:
+        if len(expenses) == 0:
+            print("No expenses found.")
+        else: 
+            print("Your Expenses: ")
+            for ex in expenses:
+                print(ex)
 
 
     
