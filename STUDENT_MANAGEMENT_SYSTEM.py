@@ -34,7 +34,7 @@ def menu():
     "\n 2. View Student " \
     "\n 3. Search student " \
     "\n 4. Update student" \
-    " \n 5. Delete student " \
+    "\n 5. Delete student " \
     "\n 6. Save students " \
     "\n 7. Exit")
 
