@@ -69,11 +69,31 @@ while True:
             search_category = input("Enter expense's category to search: ")
             found = False
             for ex in expenses:
-                if search_category.lower() in ex.category.lower()  :
+                if search_category.lower() == ex.category.lower()  :
                     print(ex)
                     found = True
             if not found:
                 print("Expense not found!") 
+
+    elif saveChoice == 4:
+        expense_name = input("Enter the expense's name you want to edit: ") 
+        found = False
+        for ex in expenses:
+            if expense_name.lower() == ex.name.lower():
+                new_name = input("Enter new name: ")
+                new_category = input("Enter new category: ")
+                new_amount = float(input("Enter new amount: "))
+
+                ex.name = new_name
+                ex.category = new_category
+                ex.amount = new_amount
+
+                print("Expense updated successfully!")
+                found = True
+        if not found:
+            print("Expense not found!")
+        
+
             
 
         
