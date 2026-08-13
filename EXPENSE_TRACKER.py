@@ -19,16 +19,15 @@ def menu():
           "\n 1. Add Expense" \
           "\n 2. View Expenses" \
           "\n 3. Search Expense" \
-          "\n 4. Delete Expense" \
-          "\n 5. Show total spending" \
-          "\n 6. Save Expenses" \
-          "\n 7. Exit"
+          "\n 4. Edit Expense" \
+          "\n 5. Delete Expense" \
+          "\n 6. Show total spending" \
+          "\n 7. Save Expenses" \
+          "\n 8. Exit"
           )
 
     choice = int(input("Enter your choice: "))
     return choice
-
-saveChoice = menu()
 
 while True:
 
@@ -51,6 +50,17 @@ while True:
             print("Your Expenses: ")
             for ex in expenses:
                 print(ex)
+
+    elif saveChoice == 3:
+        search_name = input("Enter expense's name to search: ")
+        found = False
+        for ex in expenses:
+            if ex.name.lower() == search_name.lower():
+                print(ex)
+                found = True
+        if not found:
+                print("Expense not found!")
+                
 
 
     
