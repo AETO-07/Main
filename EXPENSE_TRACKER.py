@@ -52,14 +52,31 @@ while True:
                 print(ex)
 
     elif saveChoice == 3:
-        search_name = input("Enter expense's name to search: ")
-        found = False
-        for ex in expenses:
-            if ex.name.lower() == search_name.lower():
-                print(ex)
-                found = True
-        if not found:
+
+        optional_search = input("How would you like to search? (name / category): ")
+
+        if optional_search.lower() == "name":
+            search_name = input("Enter expense's name to search: ")
+            found = False
+            for ex in expenses:
+                if search_name.lower() in ex.name.lower()  :
+                    print(ex)
+                    found = True
+            if not found:
                 print("Expense not found!")
+
+        elif optional_search.lower() == "category":
+            search_category = input("Enter expense's category to search: ")
+            found = False
+            for ex in expenses:
+                if search_category.lower() in ex.category.lower()  :
+                    print(ex)
+                    found = True
+            if not found:
+                print("Expense not found!") 
+            
+
+        
                 
 
 
