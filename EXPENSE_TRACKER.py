@@ -62,6 +62,7 @@ while True:
                 if search_name.lower() in ex.name.lower()  :
                     print(ex)
                     found = True
+                    break
             if not found:
                 print("Expense not found!")
 
@@ -72,6 +73,7 @@ while True:
                 if search_category.lower() == ex.category.lower()  :
                     print(ex)
                     found = True
+                    break
             if not found:
                 print("Expense not found!") 
 
@@ -92,6 +94,31 @@ while True:
                 found = True
         if not found:
             print("Expense not found!")
+
+    elif saveChoice == 5:
+        delete_expense_name = input("Enter the expense's name you want to delete: ")
+        found = False
+        for ex in expenses:
+            if delete_expense_name.lower() == ex.name.lower():
+                confirm = input(f"Are you sure you want to delete the expense {ex.name}? (yes / no): ")
+                if confirm.lower() == "yes":
+                    expenses.remove(ex)
+                    found = True
+                    print("Expense deleted successfully!")
+                    break
+                elif confirm.lower() == "no":
+                    print("Deletion cancelled.")
+                    found = True
+                    break
+        if not found:
+            print("Expense not found!")
+
+    elif saveChoice == 6:
+        total_amount = 0
+        for ex in expenses:
+            total_amount += ex.amount
+        print(f'Total spending: {total_amount}')
+
         
 
             
