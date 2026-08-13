@@ -1,3 +1,4 @@
+import datetime
 class Expense:
     def __init__(self, category, amount, name, date):
         self.category = category
@@ -28,6 +29,15 @@ def menu():
     return choice
 
 saveChoice = menu()
+
+if saveChoice == 1:
+    category = input("Enter expense's category: ")
+    amount = float(input("Enter expense's amount: "))
+    name = input("Enter expese's name: ")
+    date = datetime.datetime.now().strftime("%d %b, %Y")
+
+    data = Expense(category, amount, name, date)
+    expenses.append(data)
 
 
     
