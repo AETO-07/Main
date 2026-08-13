@@ -1,4 +1,4 @@
-import datetime
+import datetime, json
 class Expense:
     def __init__(self, category, amount, name, date):
         self.category = category
@@ -9,8 +9,13 @@ class Expense:
     def __str__(self):
         return f"Your Expense is: {self.category} | {self.amount} | {self.name} | {self.date}"
 
-# expense = Expense("Cereals", 2500, "Chinese-rice", "2023-06-01")
-# print(expense)
+    def convert_to_dict(self):
+        return{
+            "category": self.category,
+            "amount": self.amount,
+            "name": self.name,
+            "date": self.date
+        }
 
 expenses = []
 
@@ -121,6 +126,15 @@ while True:
         # print(f'Total spending: {total_amount}')
         total_amount = sum(ex.amount for ex in expenses)
         print(f'Total spending: {currency}{total_amount:,.2f}')
+
+    elif saveChoice == 7:
+        new_expenses_saver = []
+        for ex in expenses:
+            new_expenses_saver.append(ex.convert_to_dict())
+
+        with open("expenses_inventory.txt", "w") as file:
+            json.dump(new_expenses_saver, file, indent=4)
+            print("Expenses saved successfully!")
 
 
 
