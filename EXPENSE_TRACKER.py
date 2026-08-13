@@ -19,6 +19,23 @@ class Expense:
 
 expenses = []
 
+with open("expenses_inventory.json", "r") as file:
+    try:
+        loaded_expenses = json.load(file)
+        for expense_data in loaded_expenses:
+            expense = Expense(
+                expense_data["category"],
+                expense_data["amount"],
+                expense_data["name"],
+                expense_data["date"]
+            )
+            expenses.append(expense)
+
+    except FileNotFoundError:
+        print("No file found")
+    except json.JSONDecodeError:
+        print("No expenses found in file.")
+
 def menu():
     print("WELCOME TO EXPENSE TRACKER" \
           "\n 1. Add Expense" \
@@ -132,21 +149,12 @@ while True:
         for ex in expenses:
             new_expenses_saver.append(ex.convert_to_dict())
 
-        with open("expenses_inventory.txt", "w") as file:
+        with open("expenses_inventory.json", "w") as file:
             json.dump(new_expenses_saver, file, indent=4)
             print("Expenses saved successfully!")
 
     elif saveChoice == 8:
         print("Exiting the program. Goodbye!")
         break
-
-
-        
-
-            
-
-        
-                
-
 
     
