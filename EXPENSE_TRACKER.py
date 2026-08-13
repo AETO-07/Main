@@ -136,6 +136,9 @@ while True:
             json.dump(new_expenses_saver, file, indent=4)
             print("Expenses saved successfully!")
 
+    elif saveChoice == 8:
+        print("Exiting the program. Goodbye!")
+        break
 
 
         
