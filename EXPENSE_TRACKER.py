@@ -114,10 +114,15 @@ while True:
             print("Expense not found!")
 
     elif saveChoice == 6:
-        total_amount = 0
-        for ex in expenses:
-            total_amount += ex.amount
-        print(f'Total spending: {total_amount}')
+        currency = "₦"
+        # total_amount = 0
+        # for ex in expenses:
+        #     total_amount += ex.amount
+        # print(f'Total spending: {total_amount}')
+        total_amount = sum(ex.amount for ex in expenses)
+        print(f'Total spending: {currency}{total_amount:,.2f}')
+
+
 
         
 
