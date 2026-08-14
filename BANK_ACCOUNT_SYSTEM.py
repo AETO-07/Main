@@ -1,3 +1,4 @@
+import json, datetime
 class BankAccount:
     def __init__(self, account_name, account_number):
         self.account_name = account_name
@@ -13,7 +14,22 @@ class BankAccount:
             f"Balance: ₦{self.balance:,.2f}"
         )
 
+    def deposit(self, amount):
+        if amount <= 0:
+            print("Deposit amount must be greater than zero.")
+            return False    
+        
+        self.balance += amount
+        self.history.append({"type": "Deposit",
+                            "amount": amount,
+                            "date": datetime.datetime.now().strftime("%d %b, %Y")
+                            })
+        return True
+
+
 accounts = []
+next_account_number = 1000000
+
 
 def menu():
     print(
@@ -33,3 +49,28 @@ def menu():
 
 while True:
     save_choice = menu()
+    if save_choice == 1:
+        account_name = input("Enter account name: ")
+        if account_name.strip() == "":
+            print("Account name cannot be empty.")
+            continue
+        account_number = next_account_number
+        next_account_number += 1
+
+        user = BankAccount(account_name, account_number)
+        accounts.append(user)
+        print(f"Account created successfully!")
+        print(user)
+
+        deposit_request = input("Would you like to make an initial deposit now? (y/n): ")
+
+        if deposit_request.lower() == "y":
+            user_amount = float(input("Enter deposit amount: ").replace(",", ""))
+            if user.deposit(user_amount):
+                print("Initial deposit successful!")
+                print(user)
+        elif deposit_request.lower() == "n":
+            pass
+        else:
+            print("Invalid choice. Please enter 'y' or 'n'.")
+            #I feel it should ask the question again
