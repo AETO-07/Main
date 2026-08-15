@@ -88,3 +88,27 @@ while True:
         else:
             for account in accounts:
                 print(account)
+                
+    elif save_choice == 3:
+        try:
+            ask_account_number = int(input("Enter account number: "))
+        except ValueError:
+            print("Invalid input. Please enter a valid account number.")
+            continue
+
+        account = find_account(ask_account_number)
+        if account is None:
+            print("Account not found.")
+            continue
+
+        print(account)
+        
+        try:
+            ask_deposit_amount = float(input("Enter deposit amount: ").replace(",", ""))
+            save_deposit = account.deposit(ask_deposit_amount)
+            if save_deposit:
+                print("Deposit Successful!")
+                print(account)
+
+        except ValueError: 
+            print("Invalid input. Please enter a valid amount.")
