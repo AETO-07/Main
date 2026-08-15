@@ -26,6 +26,25 @@ class BankAccount:
                             })
         return True
 
+    def withdraw(self, amount):
+        if amount <= 0:
+            print("Withdrawal amount must be greater than zero.")
+            return False
+
+        if amount <= self.balance:
+            self.balance -= amount
+            self.history.append({
+                "type": "Withdrawal",
+                "amount": amount,
+                "balance": self.balance,
+                "date": datetime.datetime.now().strftime("%d %b, %Y")
+            })
+            return True
+        else:
+            print(
+                'Insufficient funds. Withdrawal amount exceeds available balance.'
+            )
+            return False
 
 accounts = []
 next_account_number = 1000000
@@ -88,7 +107,7 @@ while True:
         else:
             for account in accounts:
                 print(account)
-                
+
     elif save_choice == 3:
         try:
             ask_account_number = int(input("Enter account number: "))
@@ -112,3 +131,35 @@ while True:
 
         except ValueError: 
             print("Invalid input. Please enter a valid amount.")
+
+    elif save_choice == 4:
+        try:
+            ask_account_number = int(input("Enter account number: "))
+
+        except ValueError:
+            print("Invalid input.")
+            continue
+
+        account = find_account(ask_account_number)
+        if account is None:
+            print("Account not found.")
+            continue
+
+        print(account)
+    
+        try:
+            withdraw_amount = float(input("Enter withdrawal amount: ").replace(",", ""))
+        except ValueError:
+            print("Invalid input!")
+            continue
+
+        confirm = input(f"Are you sure you want to withdraw ₦{withdraw_amount:,.2f}? (y/n): ")
+        if confirm.lower() == "y":
+            proceed_withdrawal = account.withdraw(withdraw_amount)
+            if proceed_withdrawal:
+                print("Withdraw successful!")
+                print(account)
+
+        elif confirm.lower() == "n":
+            print("Withdrawal cancelled.")
+        
