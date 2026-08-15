@@ -47,6 +47,13 @@ def menu():
     ask_choice = int(input("Enter your choice: "))
     return ask_choice
 
+def find_account(account_number):
+    for account in accounts:
+        if account.account_number == account_number:
+            return account
+        
+    return None
+            
 while True:
     save_choice = menu()
     if save_choice == 1:
@@ -74,3 +81,10 @@ while True:
         else:
             print("Invalid choice. Please enter 'y' or 'n'.")
             #I feel it should ask the question again
+
+    elif save_choice == 2:
+        if not accounts:
+            print("No accounts found.")
+        else:
+            for account in accounts:
+                print(account)
