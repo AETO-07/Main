@@ -62,10 +62,16 @@ def menu():
         "\n 7. Save Accounts" 
         "\n 8. Exit"
     )
+    try:
+        ask_choice = int(input("Enter your choice: "))
 
-    ask_choice = int(input("Enter your choice: "))
-    return ask_choice
-
+        if ask_choice >= 1 and ask_choice <=8:
+            return ask_choice
+        else:
+            print("Enter any digit from 1-8.")
+    except ValueError:
+        print("Invalid input!")
+        
 def find_account(account_number):
     for account in accounts:
         if account.account_number == account_number:
@@ -162,4 +168,60 @@ while True:
 
         elif confirm.lower() == "n":
             print("Withdrawal cancelled.")
+
+    elif save_choice == 5:
+        try:
+            request_sender_account = int(input("Enter Sender's account number: "))
+
+        except ValueError:
+            print("Invalid Input")
+            continue
+            
+        verify_sender_account = find_account(request_sender_account)
+
+        if verify_sender_account is None:
+            print("Account not found!")
+            continue
+
+        print(verify_sender_account)
+
+        try:
+            request_recipient_account = int(input("Enter Recipient's account number: "))
+
+        except ValueError:
+            print("Invalid input!")
+            continue
+
+        verify_recipient_account = find_account(request_recipient_account)
+
+        if verify_recipient_account is None:
+            print("Account not found!")
+            continue
+        
+        print(verify_recipient_account)
+
+        if request_sender_account == request_recipient_account:
+            print("Sender and recipient accounts cannot be the same.")
+            continue
+
+        try: 
+            request_amount = float(input("Enter transfer amount: ").replace(",", ""))
+
+        except ValueError:
+            print("Invalid input!")
+            continue
+
+        confirm_transaction = input(f"Are you sure you want to transfer {request_amount:,.2f} to {request_recipient_account}? (y/n): ")
+        if confirm_transaction.lower() == "y":
+            verify_amount = verify_sender_account.withdraw(request_amount)
+            if verify_amount:
+                verify_recipient_account.deposit(request_amount)
+                print("Transfer successful!")
+                print(verify_sender_account)
+                print(verify_recipient_account)
+
+        elif confirm_transaction.lower() == "n":
+            print("Transfer cancelled.")
+
+
         
