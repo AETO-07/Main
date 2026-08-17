@@ -22,6 +22,7 @@ class BankAccount:
         self.balance += amount
         self.history.append({"type": "Deposit",
                             "amount": amount,
+                            "balance": self.balance,
                             "date": datetime.datetime.now().strftime("%d %b, %Y")
                             })
         return True
@@ -45,10 +46,41 @@ class BankAccount:
                 'Insufficient funds. Withdrawal amount exceeds available balance.'
             )
             return False
+        
+    def convert_to_dict(self):
+        return {
+            "account_name" : self.account_name,
+            "account_number" : self.account_number,
+            "account_balance" : self.balance,
+            "account_history" : self.history
+        }
+
 
 accounts = []
-next_account_number = 1000000
 
+try:
+    with open("Bank_database.json", "r") as file:
+        loaded_database = json.load(file)
+    for data in loaded_database:
+            load = BankAccount(
+                data["account_name"],
+                data["account_number"]
+            )
+            load.balance= data["account_balance"]
+            load.history= data["account_history"]
+            accounts.append(load)
+    print(f"{len(accounts)} account(s) loaded successfully.")
+
+except FileNotFoundError:
+    print("No database found")
+except json.JSONDecodeError:
+    print("No data in database.")
+
+if not accounts:
+    next_account_number = 1000000
+else:
+    highest = max(account.account_number for account in accounts)
+    next_account_number = highest + 1
 
 def menu():
     print(
@@ -244,3 +276,27 @@ while True:
         else:
             for transaction in verify_account.history:
                 print(transaction)
+
+    elif save_choice == 7:
+        if not accounts:
+            print("No accounts availabe to save.")
+            continue
+
+        saveAccounts = []
+
+        for account in accounts:
+            saveAccounts.append(account.convert_to_dict())
+            
+        with open("Bank_database.json", "w") as file:
+                json.dump(saveAccounts, file, indent=4)
+        print(f"{len(accounts)} account(s) saved successfully!")
+
+    elif save_choice == 8:
+        confirm = input("Are you sure you want to exit? (y/n): ")
+        if confirm.lower().strip() == "y":
+            print("Goodbye!")
+            break
+        elif confirm.lower().strip() == "n":
+            continue
+        else:
+            print("Please enter 'y' or 'n'.")
