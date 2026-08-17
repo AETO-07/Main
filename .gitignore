@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Project data files
+Bank_database.json
+expenses_inventory.json
+highScore.txt
+Review_Quiz_Project.txt
+Student_data.txt
+tasks.json
