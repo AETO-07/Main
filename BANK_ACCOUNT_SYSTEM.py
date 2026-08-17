@@ -96,7 +96,7 @@ while True:
 
         deposit_request = input("Would you like to make an initial deposit now? (y/n): ")
 
-        if deposit_request.lower() == "y":
+        if deposit_request.lower().strip() == "y":
             user_amount = float(input("Enter deposit amount: ").replace(",", ""))
             if user.deposit(user_amount):
                 print("Initial deposit successful!")
@@ -223,5 +223,24 @@ while True:
         elif confirm_transaction.lower() == "n":
             print("Transfer cancelled.")
 
+    elif save_choice == 6:
+        try:
+            request_account = int(input("Enter account number: "))
 
-        
+        except ValueError:
+            print("Invalid input!")
+            continue
+
+        verify_account = find_account(request_account)
+
+        if verify_account is None:
+            print("Account not found!")
+            continue
+
+        if not verify_account.history:
+            print("No transaction history found.")
+            continue
+
+        else:
+            for transaction in verify_account.history:
+                print(transaction)
